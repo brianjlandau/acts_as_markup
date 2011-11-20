@@ -136,11 +136,11 @@ formated HTML.</p>
 
 <p>Additionally you can have a model that contains a column that has a column
 with  markup text, and another that defines what language to process it as.
-If the field  is listed as “markdown” “textile”, “mediawiki” or “rdoc”
-(case insensitive) it will  treat it as such, any other value for markup
-language will have the value pass  through as a normal string.</p>
+If the field  is listed as “markdown” “textile”, “mediawiki” or
+“rdoc” (case insensitive) it will  treat it as such, any other value
+for markup language will have the value pass  through as a normal string.</p>
 
-<p>This AR extension can use 3 different types of Markdown processing
+<p>This AR extension can use 5 different types of Markdown processing
 backends:  BlueCloth, <a href="RDiscount.html">RDiscount</a>, Ruby PEG, <a
 href="Redcarpet.html">Redcarpet</a> or <a href="Maruku.html">Maruku</a>.
 You specify which one you want to use by setting a config value in your
@@ -265,17 +265,27 @@ options currently supported are:</p>
 
 <h2 id="label-INSTALL%3A">INSTALL:</h2>
 
-<p><code>sudo gem install acts_as_markup</code></p>
+<h4 id="label-Rails+2">Rails 2</h4>
+
+<p><code>(sudo) gem install acts_as_markup</code></p>
 
 <p>Add “<code>acts_as_markup</code>” to your environment.rb:</p>
 
 <pre>config.gem &quot;acts_as_markup&quot;</pre>
 
+<h4 id="label-Rails+3">Rails 3</h4>
+
+<p>Simply add “<code>acts_as_markup</code>” to your Gemfile:</p>
+
+<pre>gem &quot;acts_as_markup&quot;</pre>
+
+<p>And run “<code>bundle</code> <code>install</code>”</p>
+
 <h2 id="label-CONTRIBUTING%3A">CONTRIBUTING:</h2>
 
 <p>Make a fork on GitHub, make your changes and do a pull request. Good places
-to start are adding new Markdown libraries or new markup languages, here’s
-instructions for both:</p>
+to start are adding new Markdown libraries or new markup languages,
+here’s instructions for both:</p>
 
 <h3 id="label-Instructions+for+how+to+add+a+new+Markdown+Library%3A">Instructions for how to add a new Markdown Library:</h3>
 <ol><li>
@@ -299,32 +309,32 @@ or <code>to_html</code> method), add a file to the
 
 <h3 id="label-Instructions+for+how+to+add+a+new+Markup+Language%3A">Instructions for how to add a new Markup Language:</h3>
 <ol><li>
-<p>Add a “<code>when</code>” statement to the “<code>case</code>” statement in
-<code>acts_as_markup</code>. The “<code>when</code>” statement should match
-with a symbol that represents the language name in some way (e.g.
-“<code>:markdown</code>”).</p>
+<p>Add a “<code>when</code>” statement to the “<code>case</code>”
+statement in <code>acts_as_markup</code>. The “<code>when</code>”
+statement should match with a symbol that represents the language name in
+some way (e.g. “<code>:markdown</code>”).</p>
 </li><li>
-<p>In the “<code>when</code>” block you need to set the “<code>klass</code>”
-local variable and require the library and the extension file if you need
-one (use the special <code>require_extensions</code> method to require
-extensions).</p>
+<p>In the “<code>when</code>” block you need to set the
+“<code>klass</code>” local variable and require the library and the
+extension file if you need one (use the special
+<code>require_extensions</code> method to require extensions).</p>
 </li><li>
-<p>Add the same lines you added to the previous “<code>when</code>” statement
-to the “<code>:variable</code>” “<code>when</code>” statement. But replace
-“<code>klass</code>” with “<code>language_klass</code>” (e.g.
-“<code>markdown_klass</code>”).</p>
+<p>Add the same lines you added to the previous “<code>when</code>”
+statement to the “<code>:variable</code>” “<code>when</code>”
+statement. But replace “<code>klass</code>” with
+“<code>language_klass</code>” (e.g. “<code>markdown_klass</code>”).</p>
 </li><li>
-<p>Add a relevant “<code>when</code>” statement to the <code>class_eval</code>
-block for the “<code>:variable</code>” language option. This should look
-something like:</p>
+<p>Add a relevant “<code>when</code>” statement to the
+<code>class_eval</code> block for the “<code>:variable</code>” language
+option. This should look something like:</p>
 
 <pre>when /markdown/i
   markup_klasses[:markdown].new self[col].to_s</pre>
 </li><li>
 <p>Add a convenience method (e.g. “<code>acts_as_markdown</code>”)</p>
 </li><li>
-<p>Add an extension file to the “lib/acts_as_markup/exts/” directory if you
-need to modify the object in anyway.</p>
+<p>Add an extension file to the “lib/acts_as_markup/exts/” directory if
+you need to modify the object in anyway.</p>
 </li><li>
 <p>Add appropriate tests (see current tests).</p>
 </li></ol>
